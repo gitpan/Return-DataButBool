@@ -3,7 +3,7 @@ package Return::DataButBool;
 use warnings;
 use strict;
 
-use version; our $VERSION = qv('0.0.1');
+use version; our $VERSION = qv('0.0.2');
 
 use base 'Exporter';
 our @EXPORT = qw(zero_but_true data_but_true data_but_false);
@@ -55,7 +55,7 @@ Return::DataButBool - Return a boolean value that also has arbitrary numeric and
 
 =head1 VERSION
 
-This document describes Return::DataButBool version 0.0.1
+This document describes Return::DataButBool version 0.0.2
 
 =head1 SYNOPSIS
 
