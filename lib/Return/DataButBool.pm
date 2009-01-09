@@ -3,21 +3,22 @@ package Return::DataButBool;
 use warnings;
 use strict;
 
-use version; our $VERSION = qv('0.0.2');
+use version; our $VERSION = qv('0.0.3');
 
 use base 'Exporter';
 our @EXPORT = qw(zero_but_true data_but_true data_but_false);
 
-# bring in the bug guns
+# bring in the big guns
 use Contextual::Return;
 
 sub zero_but_true {
-    return 'E0E';	
+    return '0e0';	
 }
 
 sub data_but_true {
     my $num = _get_num_from( shift() );
-    my $str = shift() || $num;
+    my $str = shift();
+    $str    = $num if !defined $str;
     
     return (
         BOOL { 1; }
@@ -28,17 +29,17 @@ sub data_but_true {
 
 sub data_but_false {
     my $num = _get_num_from( shift() );
-    my $str = shift() || $num;
+    my $str = shift();
+    $str    = $num if !defined $str;
 
     return (
         BOOL { 0; }
         NUM  { $num }
         STR  { $str }
-
     );
 }
 
-# out in external num() func or soemthing?
+# out in external num() func or something?
 sub _get_num_from {
 	my ($num) = @_;
 	return $num =~ m{ \A ([-+]? \d+ (?: [.] \d+ )?) \z }xms ? $1 : int($num);
@@ -55,7 +56,7 @@ Return::DataButBool - Return a boolean value that also has arbitrary numeric and
 
 =head1 VERSION
 
-This document describes Return::DataButBool version 0.0.2
+This document describes Return::DataButBool version 0.0.3
 
 =head1 SYNOPSIS
 
@@ -80,7 +81,7 @@ later in the code using this function:
 
 =head1 DESCRIPTION
 
-Perl's Zero-But-True ( EOE ) is a most handy tool. This module expands on that idea by having a return value that has different boolean, numeric, and string values.
+Perl's Zero-But-True ( 0e0 ) is a most handy tool (See L<String::ZeroButTrue>). This module expands on that idea by having a return value that has different boolean, numeric, and string values.
 
 For example you could return a count of files processed (say 42 which is "true") but still say it failed in boolean context.
 
@@ -100,7 +101,7 @@ The second is the string value. If not specified the numeric value is used.
 
 =head2 zero_but_true()
 
-takes no args, returns good 'ol E0E (zero but true) for
+takes no args, returns good 'ol 0e0 (zero but true). See L<String::ZeroButTrue> for more comprehensive alternatives.
 
 =head2 data_but_true()
 
